@@ -1,14 +1,19 @@
 require([
-  'game-loop'
-], function(GameLoop) {
+  'game-loop',
+  'game-renderer',
+  'game-updater',
+  'game-entity'
+], function(GameLoop, GameRenderer, GameUpdater, GameEntity) {
   'use strict';
 
+  var entities = [];
+  entities.push(new GameEntity());
+  entities.push(new GameEntity(50, 50));
 
-  var gameLoop = new GameLoop(function (elapsedTime) {
-    console.log('update ' + elapsedTime);
-  }, function (elapsedTime) {
-    console.log('render ' + elapsedTime);
-  });
+  var gameRenderer = new GameRenderer(document.getElementById('screen'), entities);
+  var gameUpdater = new GameUpdater();
+
+  var gameLoop = new GameLoop(gameUpdater, gameRenderer);
 
   gameLoop.start();
 });
