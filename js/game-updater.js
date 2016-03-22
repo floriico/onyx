@@ -8,16 +8,16 @@ define([], function () {
 
   function updatePlayer(inputHandler, player) {
     if (inputHandler.isPressed(68)) {
-      player.velocity.x = 1;
+      player.velocity.x = 100;
     } else if (inputHandler.isPressed(65)) {
-      player.velocity.x = -1;
+      player.velocity.x = -100;
     } else {
       player.velocity.x = 0;
     }
     if (inputHandler.isPressed(83)) {
-      player.velocity.y = 1;
+      player.velocity.y = 100;
     } else if (inputHandler.isPressed(87)) {
-      player.velocity.y = -1;
+      player.velocity.y = -100;
     } else {
       player.velocity.y = 0;
     }
@@ -29,8 +29,8 @@ define([], function () {
     updatePlayer(this.inputHandler, this.entities[0]);
     for (let i = 0; i < len; i++) {
       let entity = this.entities[i];
-      entity.position.x += entity.velocity.x;
-      entity.position.y += entity.velocity.y;
+      entity.position.x += entity.velocity.x * elapsedTime / 1000;
+      entity.position.y += entity.velocity.y * elapsedTime / 1000;
       if (entity.position.x < 0) { entity.position.x = 0; }
       if (entity.position.x > 305) { entity.position.x = 305; }
       if (entity.position.y < 0) { entity.position.y = 0; }
