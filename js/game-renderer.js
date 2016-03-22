@@ -17,7 +17,7 @@ define([], function () {
     for (i = 0; i < len; i++) {
       entity = this.entities[i];
       this.gc.save()
-      this.gc.translate(entity.position.x, entity.position.y);
+      this.gc.translate(Math.round(entity.position.x), Math.round(entity.position.y));
       entity.componentGraphic.paint(this.gc);
       this.gc.restore()
     }
