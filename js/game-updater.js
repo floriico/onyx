@@ -1,10 +1,11 @@
 define([], function () {
   'use strict';
 
-  var GameUpdater = function (inputHandler, entities) {
+  var GameUpdater = function (inputHandler, entities, player) {
     this.inputHandler = inputHandler;
     this.entities = entities;
-  }
+    this.player = player;
+  };
 
   function updatePlayer(inputHandler, player) {
     if (inputHandler.isPressed(68)) {
@@ -26,7 +27,7 @@ define([], function () {
   GameUpdater.prototype.update = function update(elapsedTime) {
     const len = this.entities.length;
 
-    updatePlayer(this.inputHandler, this.entities[0]);
+    updatePlayer(this.inputHandler, this.player);
     for (let i = 0; i < len; i++) {
       let entity = this.entities[i];
       entity.position.x += entity.velocity.x * elapsedTime / 1000;
