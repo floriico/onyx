@@ -11,18 +11,17 @@ define([], function() {
   }
 
   GameLoop.prototype.tick = function tick(now) {
-    var elapsedTime;
-
     if (!this.lastTick) {
       this.lastTick = now;
     }
-    elapsedTime = now - this.lastTick;
+    let elapsedTime = now - this.lastTick;
     this.deltaTime += elapsedTime;
     while (this.deltaTime > this.updateFrequency) {
       this.deltaTime -= this.updateFrequency;
       this.updater.update.call(this.updater, this.updateFrequency);
     }
     this.renderer.paint.call(this.renderer, elapsedTime);
+    this.lastTick = now;
     if (this.run) {
       requestAnimationFrame(this.tick.bind(this));
     }
