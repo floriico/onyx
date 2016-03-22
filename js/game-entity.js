@@ -8,6 +8,10 @@ define([
       x: x || 0,
       y: y || 0
     }
+    this.velocity = {
+      x: 0,
+      y: 0
+    }
     this.componentGraphic = new ComponentGraphic();
   }
 

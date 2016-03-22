@@ -1,12 +1,41 @@
 define([], function () {
   'use strict';
 
-  var GameUpdater = function () {
+  var GameUpdater = function (inputHandler, entities) {
+    this.inputHandler = inputHandler;
+    this.entities = entities;
+  }
 
+  function updatePlayer(inputHandler, player) {
+    if (inputHandler.isPressed(68)) {
+      player.velocity.x = 1;
+    } else if (inputHandler.isPressed(65)) {
+      player.velocity.x = -1;
+    } else {
+      player.velocity.x = 0;
+    }
+    if (inputHandler.isPressed(83)) {
+      player.velocity.y = 1;
+    } else if (inputHandler.isPressed(87)) {
+      player.velocity.y = -1;
+    } else {
+      player.velocity.y = 0;
+    }
   }
 
   GameUpdater.prototype.update = function update(elapsedTime) {
-    console.log('update ' + elapsedTime);
+    const len = this.entities.length;
+
+    updatePlayer(this.inputHandler, this.entities[0]);
+    for (let i = 0; i < len; i++) {
+      let entity = this.entities[i];
+      entity.position.x += entity.velocity.x;
+      entity.position.y += entity.velocity.y;
+      if (entity.position.x < 0) { entity.position.x = 0; }
+      if (entity.position.x > 305) { entity.position.x = 305; }
+      if (entity.position.y < 0) { entity.position.y = 0; }
+      if (entity.position.y > 185) { entity.position.y = 185; }
+    }
   };
 
   return GameUpdater;
