@@ -10,17 +10,17 @@ require([
   'use strict';
 
   const player = new GameEntity({
-    componentGraphic: new ComponentGraphic()
+    componentGraphic: new ComponentGraphic({ color: '#2aa198'})
   });
   const entities = [];
   entities.push(player);
   entities.push(new GameEntity({
     position: { x: 100, y: 100 },
-    componentGraphic: new ComponentGraphic()
+    componentGraphic: new ComponentGraphic({})
   }));
   entities.push(new GameEntity({
     position: { x: 50, y: 50 },
-    componentGraphic: new ComponentGraphic()
+    componentGraphic: new ComponentGraphic({})
   }));
 
   var gameInputHandler = new GameInputHandler();

@@ -1,11 +1,12 @@
 define([], function () {
   'use strict';
 
-  var ComponentGraphic = function () {
+  var ComponentGraphic = function (options) {
+    this.color = options.color || "#dc322f";
   };
 
   ComponentGraphic.prototype.paint = function paint(gc) {
-    gc.fillStyle = "#dc322f";
+    gc.fillStyle = this.color;
     gc.fillRect(0, 0, 15, 15);
   };
 
