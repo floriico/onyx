@@ -5,7 +5,7 @@ define([], function () {
   };
 
   ComponentGraphic.prototype.paint = function paint(gc) {
-    gc.fillStyle = "rgb(200,0,0)";
+    gc.fillStyle = "#dc322f";
     gc.fillRect(0, 0, 15, 15);
   };
 

@@ -12,14 +12,14 @@ define([], function () {
     var i;
     var entity;
 
-    this.gc.fillStyle = '#000';
+    this.gc.fillStyle = '#002b36';
     this.gc.fillRect(0, 0, this.canvas.width, this.canvas.height);
     for (i = 0; i < len; i++) {
       entity = this.entities[i];
-      this.gc.save()
+      this.gc.save();
       this.gc.translate(Math.round(entity.position.x), Math.round(entity.position.y));
       entity.componentGraphic.paint(this.gc);
-      this.gc.restore()
+      this.gc.restore();
     }
   };
 
