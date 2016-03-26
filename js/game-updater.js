@@ -1,4 +1,6 @@
-define([], function () {
+define([
+  'game-input-handler'
+], function (GameInputHandler) {
   'use strict';
 
   var GameUpdater = function (inputHandler, entities, player) {
@@ -8,16 +10,16 @@ define([], function () {
   };
 
   function updatePlayer(inputHandler, player) {
-    if (inputHandler.isPressed(68)) {
+    if (inputHandler.isPressed(GameInputHandler.RIGHT)) {
       player.velocity.x = 100;
-    } else if (inputHandler.isPressed(65)) {
+    } else if (inputHandler.isPressed(GameInputHandler.LEFT)) {
       player.velocity.x = -100;
     } else {
       player.velocity.x = 0;
     }
-    if (inputHandler.isPressed(83)) {
+    if (inputHandler.isPressed(GameInputHandler.DOWN)) {
       player.velocity.y = 100;
-    } else if (inputHandler.isPressed(87)) {
+    } else if (inputHandler.isPressed(GameInputHandler.UP)) {
       player.velocity.y = -100;
     } else {
       player.velocity.y = 0;
