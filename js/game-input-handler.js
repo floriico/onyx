@@ -11,7 +11,7 @@ define([], function() {
     document.addEventListener('keyup', function (ev) {
       that.keys[ev.keyCode] = false;
     });
-  }
+  };
 
   GameInputHandler.prototype.isPressed = function isPressed(key) {
     return this.keys[key];

@@ -8,7 +8,7 @@ define([], function() {
     this.lastTick = null;
     this.deltaTime = 0;
     this.run = false;
-  }
+  };
 
   GameLoop.prototype.tick = function tick(now) {
     if (!this.lastTick) {
@@ -25,7 +25,7 @@ define([], function() {
     if (this.run) {
       requestAnimationFrame(this.tick.bind(this));
     }
-  }
+  };
 
   GameLoop.prototype.start = function start() {
     this.run = true;
