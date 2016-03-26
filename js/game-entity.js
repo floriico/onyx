@@ -1,18 +1,18 @@
-define([
-  'component-graphic'
-], function(ComponentGraphic) {
+define([], function() {
   'use strict';
 
-  var GameEntity = function(x, y) {
+  var GameEntity = function(options) {
+    options.position = options.position || {};
+    options.velocity = options.velocity || {};
     this.position = {
-      x: x || 0,
-      y: y || 0
+      x: options.position.x || 0,
+      y: options.position.y || 0
     };
     this.velocity = {
-      x: 0,
-      y: 0
+      x: options.velocity.x || 0,
+      y: options.velocity.y || 0
     };
-    this.componentGraphic = new ComponentGraphic();
+    this.componentGraphic = options.componentGraphic || null;
   };
 
   return GameEntity;
