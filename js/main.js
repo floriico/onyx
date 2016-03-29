@@ -4,13 +4,15 @@ require([
   'game-updater',
   'game-entity',
   'game-input-handler',
-  'component-graphic'
+  'component-graphic',
+  'component-physic'
 ], function(GameLoop, GameRenderer, GameUpdater, GameEntity, GameInputHandler,
-    ComponentGraphic) {
+    ComponentGraphic, ComponentPhysic) {
   'use strict';
 
   const player = new GameEntity({
-    componentGraphic: new ComponentGraphic({ color: '#2aa198'})
+    componentGraphic: new ComponentGraphic({ color: '#2aa198'}),
+    componentPhysic: new ComponentPhysic()
   });
   const entities = [];
   entities.push(player);

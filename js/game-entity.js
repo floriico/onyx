@@ -13,6 +13,7 @@ define([], function() {
       y: options.velocity.y || 0
     };
     this.componentGraphic = options.componentGraphic || null;
+    this.componentPhysic = options.componentPhysic || null;
   };
 
   return GameEntity;

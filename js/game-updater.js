@@ -10,19 +10,20 @@ define([
   };
 
   function updatePlayer(inputHandler, player) {
+    let playerVelocity = player.componentPhysic.velocity;
     if (inputHandler.isPressed(GameInputHandler.RIGHT)) {
-      player.velocity.x = 100;
+      playerVelocity.x = 100;
     } else if (inputHandler.isPressed(GameInputHandler.LEFT)) {
-      player.velocity.x = -100;
+      playerVelocity.x = -100;
     } else {
-      player.velocity.x = 0;
+      playerVelocity.x = 0;
     }
     if (inputHandler.isPressed(GameInputHandler.DOWN)) {
-      player.velocity.y = 100;
+      playerVelocity.y = 100;
     } else if (inputHandler.isPressed(GameInputHandler.UP)) {
-      player.velocity.y = -100;
+      playerVelocity.y = -100;
     } else {
-      player.velocity.y = 0;
+      playerVelocity.y = 0;
     }
     if (inputHandler.isPressed(GameInputHandler.ACTION_A)) {
       player.componentGraphic.color = '#6c71c4';
@@ -32,17 +33,21 @@ define([
   }
 
   GameUpdater.prototype.update = function update(elapsedTime) {
-    const len = this.entities.length;
-
     updatePlayer(this.inputHandler, this.player);
+    const entities = this.entities.filter(function filterComponentPhysic(e) {
+      return e.componentPhysic !== null;
+    });
+    const len = entities.length;
     for (let i = 0; i < len; i++) {
-      let entity = this.entities[i];
-      entity.position.x += entity.velocity.x * elapsedTime / 1000;
-      entity.position.y += entity.velocity.y * elapsedTime / 1000;
-      if (entity.position.x < 0) { entity.position.x = 0; }
-      if (entity.position.x > 305) { entity.position.x = 305; }
-      if (entity.position.y < 0) { entity.position.y = 0; }
-      if (entity.position.y > 185) { entity.position.y = 185; }
+      let entity = entities[i];
+      let entityPosition = entity.position;
+      let entityVelocity = entity.componentPhysic.velocity;
+      entityPosition.x += entityVelocity.x * elapsedTime / 1000;
+      entityPosition.y += entityVelocity.y * elapsedTime / 1000;
+      if (entityPosition.x < 0) { entityPosition.x = 0; }
+      if (entityPosition.x > 305) { entityPosition.x = 305; }
+      if (entityPosition.y < 0) { entityPosition.y = 0; }
+      if (entityPosition.y > 185) { entityPosition.y = 185; }
     }
   };
 
