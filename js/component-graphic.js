@@ -2,6 +2,7 @@ define([], function () {
   'use strict';
 
   var ComponentGraphic = function (options) {
+    options = options || {};
     this.color = options.color || "#dc322f";
   };
 
