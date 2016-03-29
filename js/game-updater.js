@@ -24,6 +24,11 @@ define([
     } else {
       player.velocity.y = 0;
     }
+    if (inputHandler.isPressed(GameInputHandler.ACTION_A)) {
+      player.componentGraphic.color = '#6c71c4';
+    } else {
+      player.componentGraphic.color = '#2aa198';
+    }
   }
 
   GameUpdater.prototype.update = function update(elapsedTime) {
