@@ -14,6 +14,7 @@ define([], function() {
     };
     this.componentGraphic = options.componentGraphic || null;
     this.componentPhysic = options.componentPhysic || null;
+    this.componentLife = options.componentLife || null;
   };
 
   return GameEntity;
