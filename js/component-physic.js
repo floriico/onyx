@@ -8,9 +8,10 @@ define([], function () {
       y: (options.velocity && options.velocity.y) || 0
     };
     this.boundingBox = {
-      x: (options.boundingBox && options.boundingBox.x) || 0,
-      y: (options.boundingBox && options.boundingBox.y) || 0
+      width: (options.boundingBox && options.boundingBox.width) || 0,
+      height: (options.boundingBox && options.boundingBox.height) || 0
     }
+    this.isSolid = options.isSolid || false;
   };
 
   return ComponentPhysic;
