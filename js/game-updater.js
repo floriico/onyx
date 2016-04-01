@@ -3,9 +3,9 @@ define([
 ], function (GameInputHandler) {
   'use strict';
 
-  var GameUpdater = function (inputHandler, entities, player) {
+  var GameUpdater = function (inputHandler, entityStore, player) {
     this.inputHandler = inputHandler;
-    this.entities = entities;
+    this.entityStore = entityStore;
     this.player = player;
   };
 
@@ -50,7 +50,7 @@ define([
 
   GameUpdater.prototype.update = function update(elapsedTime) {
     updatePlayer(this.inputHandler, this.player);
-    const entities = this.entities.filter(function filterComponentPhysic(e) {
+    const entities = this.entityStore.getEntities().filter(function filterComponentPhysic(e) {
       return e.componentPhysic !== null;
     });
     const solidEntities = entities.filter(function filterSolid(e) {

@@ -1,16 +1,16 @@
 define([], function () {
   'use strict';
 
-  var GameRenderer = function (canvas, entities) {
+  var GameRenderer = function (canvas, entityStore) {
     this.canvas = canvas;
-    this.entities = entities;
+    this.entityStore = entityStore;
     this.gc = this.canvas.getContext('2d');
   };
 
   GameRenderer.prototype.paint = function paint() {
     this.gc.fillStyle = '#002b36';
     this.gc.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    const entities = this.entities.sort(function depthSort(entityA, entityB) {
+    const entities = this.entityStore.getEntities().sort(function depthSort(entityA, entityB) {
       return entityA.position.y - entityB.position.y;
     })
     const len =  entities.length;
