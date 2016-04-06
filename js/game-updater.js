@@ -32,10 +32,10 @@ define([
     }
   }
 
-  function willCollide(entity, nextPosition, solidEntities) {
-    const len = solidEntities.length;
+  function willCollide(entity, nextPosition, entities) {
+    const len = entities.length;
     for (let i = 0; i < len; i++) {
-      const entityToCheck = solidEntities[i];
+      const entityToCheck = entities[i];
       if (entity !== entityToCheck) {
         if (nextPosition.x < entityToCheck.position.x + entityToCheck.componentPhysic.boundingBox.width &&
             nextPosition.x + entity.componentPhysic.boundingBox.width > entityToCheck.position.x &&
@@ -53,9 +53,6 @@ define([
     const entities = this.entityStore.getEntities().filter(function filterComponentPhysic(e) {
       return e.componentPhysic !== null;
     });
-    const solidEntities = entities.filter(function filterSolid(e) {
-      return e.componentPhysic.isSolid;
-    });
     const len = entities.length;
     for (let i = 0; i < len; i++) {
       let entity = entities[i];
@@ -64,7 +61,7 @@ define([
         x: entity.position.x + entityVelocity.x * elapsedTime / 1000,
         y: entity.position.y + entityVelocity.y * elapsedTime / 1000
       }
-      if (!willCollide(entity, nextPosition, solidEntities)) {
+      if (!willCollide(entity, nextPosition, entities)) {
         entity.position = nextPosition;
       }
       if (entity.position.x < 0) { entity.position.x = 0; }
