@@ -1,4 +1,6 @@
-define([], function() {
+define([
+  'entity-component/bounding-box'
+], function(BoundingBox) {
   'use strict';
 
   var GameEntity = function(options) {
@@ -15,6 +17,21 @@ define([], function() {
     this.componentGraphic = options.componentGraphic || null;
     this.componentPhysic = options.componentPhysic || null;
     this.componentLife = options.componentLife || null;
+    this.componentBoundingBox = null;
+    Object.seal(this);
+  };
+
+  GameEntity.prototype.setBoundingBox = function setBoundingBox(component) {
+    if (!(component instanceof BoundingBox)) {
+      throw new Error();
+      throw new TypeError('not a BoundingBox component');
+    }
+    this.componentBoundingBox = component;
+    return this;
+  }
+
+  GameEntity.prototype.update = function () {
+
   };
 
   return GameEntity;
