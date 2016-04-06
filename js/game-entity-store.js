@@ -1,9 +1,11 @@
 define([
   'game-entity',
   'entity-component/position',
+  'entity-component/bounding-box',
   'component-graphic',
   'component-physic'
-], function(GameEntity, Position, ComponentGraphic, ComponentPhysic) {
+], function(GameEntity, Position, BoundingBox, ComponentGraphic,
+    ComponentPhysic) {
   'use strict';
 
   function GameEntityStore() {
@@ -12,6 +14,12 @@ define([
 
   GameEntityStore.prototype.getEntities = function () {
     return this.entities;
+  }
+
+  GameEntityStore.prototype.getCollidables = function () {
+    return this.entities.filter(function collidableFilter(e) {
+      return e.boundingBox !== null;
+    })
   }
 
   GameEntityStore.prototype.createHuman = function () {
@@ -25,7 +33,8 @@ define([
         isSolid: true
       })
     });
-    human.setPosition(new Position(0, 0));
+    human.setPosition(new Position(0, 0))
+      .setBoundingBox(new BoundingBox(15, 15));
     this.entities.push(human);
     return human;
   }
@@ -41,7 +50,8 @@ define([
         isSolid: true
       })
     });
-    wall.setPosition(new Position(100, 100));
+    wall.setPosition(new Position(100, 100))
+      .setBoundingBox(new BoundingBox(15, 15));
     this.entities.push(wall);
     return wall;
   }

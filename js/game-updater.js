@@ -33,15 +33,15 @@ define([
     }
   }
 
-  function willCollide(entity, nextPosition, entities) {
-    const len = entities.length;
+  function willCollide(entity, nextPosition, collidables) {
+    const len = collidables.length;
     for (let i = 0; i < len; i++) {
-      const entityToCheck = entities[i];
-      if (entity !== entityToCheck) {
-        if (nextPosition.x < entityToCheck.position.x + entityToCheck.componentPhysic.boundingBox.width &&
-            nextPosition.x + entity.componentPhysic.boundingBox.width > entityToCheck.position.x &&
-            nextPosition.y < entityToCheck.position.y + entityToCheck.componentPhysic.boundingBox.height &&
-            nextPosition.y + entity.componentPhysic.boundingBox.height > entityToCheck.position.y) {
+      const collidable = collidables[i];
+      if (entity !== collidable) {
+        if (nextPosition.x < collidable.position.x + collidable.boundingBox.width &&
+            nextPosition.x + entity.boundingBox.width > collidable.position.x &&
+            nextPosition.y < collidable.position.y + collidable.boundingBox.height &&
+            nextPosition.y + entity.boundingBox.height > collidable.position.y) {
           return true;
         }
       }
@@ -62,7 +62,7 @@ define([
         entity.position.x + entityVelocity.x * elapsedTime / 1000,
         entity.position.y + entityVelocity.y * elapsedTime / 1000
       );
-      if (!willCollide(entity, nextPosition, entities)) {
+      if (!willCollide(entity, nextPosition, this.entityStore.getCollidables())) {
         entity.setPosition(nextPosition);
       }
       if (entity.position.x < 0) { entity.position.x = 0; }

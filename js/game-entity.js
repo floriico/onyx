@@ -14,7 +14,7 @@ define([
     this.componentGraphic = options.componentGraphic || null;
     this.componentPhysic = options.componentPhysic || null;
     this.componentLife = options.componentLife || null;
-    this.componentBoundingBox = null;
+    this.boundingBox = null;
     Object.seal(this);
   };
 
@@ -30,7 +30,7 @@ define([
     if (!(component instanceof BoundingBox)) {
       throw new TypeError('not a BoundingBox component');
     }
-    this.componentBoundingBox = component;
+    this.boundingBox = component;
     return this;
   }
 
