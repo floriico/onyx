@@ -71,10 +71,10 @@ define([
       if (!willCollide(entity, nextPosition, this.entityStore.getCollidables())) {
         entity.setPosition(nextPosition);
       }
-      if (entity.position.x < 0) { entity.position.x = 0; }
-      if (entity.position.x > 305) { entity.position.x = 305; }
-      if (entity.position.y < 0) { entity.position.y = 0; }
-      if (entity.position.y > 185) { entity.position.y = 185; }
+      if (entity.position.x < 0) { entity.setPosition(new Position(0, entity.position.y)); }
+      if (entity.position.x > 305) { entity.setPosition(new Position(305, entity.position.y)) }
+      if (entity.position.y < 0) { entity.setPosition(new Position(entity.position.x, 0)) }
+      if (entity.position.y > 185) { entity.setPosition(new Position(entity.position.x, 185)) }
     }
     const dieable = this.entityStore.filterDieable();
     const dieableLen = dieable.length;
