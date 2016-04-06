@@ -2,8 +2,9 @@ define([
   'entity-component/position',
   'entity-component/velocity',
   'entity-component/bounding-box',
-  'entity-component/health'
-], function(Position, Velocity, BoundingBox, Health) {
+  'entity-component/health',
+  'entity-component/weapon'
+], function(Position, Velocity, BoundingBox, Health, Weapon) {
   'use strict';
 
   var GameEntity = function(options) {
@@ -13,6 +14,7 @@ define([
     this.componentLife = options.componentLife || null;
     this.boundingBox = null;
     this.health = null;
+    this.weapon = null;
     Object.seal(this);
   };
 
@@ -45,6 +47,14 @@ define([
       throw new TypeError('not a Health component');
     }
     this.health = component;
+    return this;
+  }
+
+  GameEntity.prototype.setWeapon = function setWeapon(component) {
+    if (!(component instanceof Weapon)) {
+      throw new TypeError('not a Weapon component');
+    }
+    this.weapon = component;
     return this;
   }
 

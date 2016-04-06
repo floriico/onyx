@@ -10,7 +10,7 @@ define([
     this.player = player;
   };
 
-  function updatePlayer(inputHandler, player) {
+  function updatePlayer(inputHandler, player, entityStore) {
     if (inputHandler.isPressed(GameInputHandler.RIGHT)) {
       player.velocity.x = 100;
     } else if (inputHandler.isPressed(GameInputHandler.LEFT)) {
@@ -27,6 +27,16 @@ define([
     }
     if (inputHandler.isPressed(GameInputHandler.ACTION_A)) {
       player.componentGraphic.color = '#6c71c4';
+      entityStore.getEntities().filter(function (e) {
+        return e !== player && e.position && e.health
+          && e.position.x > player.position.x - 10
+          && e.position.x < player.position.x + 25
+          && e.position.y > player.position.y - 10
+          && e.position.y < player.position.y + 25;
+      }).forEach(function (e) {
+        e.health.hp -= player.weapon.minDamage + Math.floor(Math.random()
+            * (player.weapon.maxDamage - player.weapon.minDamage));
+      });
     } else {
       player.componentGraphic.color = '#2aa198';
     }
@@ -49,7 +59,7 @@ define([
   }
 
   GameUpdater.prototype.update = function update(elapsedTime) {
-    updatePlayer(this.inputHandler, this.player);
+    updatePlayer(this.inputHandler, this.player, this.entityStore);
     const entities = this.entityStore.filterMovable();
     const len = entities.length;
     for (let i = 0; i < len; i++) {
@@ -65,6 +75,14 @@ define([
       if (entity.position.x > 305) { entity.position.x = 305; }
       if (entity.position.y < 0) { entity.position.y = 0; }
       if (entity.position.y > 185) { entity.position.y = 185; }
+    }
+    const dieable = this.entityStore.filterDieable();
+    const dieableLen = dieable.length;
+    for (let i = 0; i < dieableLen; i++) {
+      if (dieable[i].health.hp <= 0) {
+        this.entityStore.cleanup();
+        break;
+      }
     }
   };
 

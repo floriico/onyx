@@ -4,8 +4,9 @@ define([
   'entity-component/velocity',
   'entity-component/bounding-box',
   'entity-component/health',
+  'entity-component/weapon',
   'component-graphic'
-], function(GameEntity, Position, Velocity, BoundingBox, Health,
+], function(GameEntity, Position, Velocity, BoundingBox, Health, Weapon,
     ComponentGraphic) {
   'use strict';
 
@@ -15,19 +16,40 @@ define([
 
   GameEntityStore.prototype.getEntities = function () {
     return this.entities;
-  }
+  };
 
   GameEntityStore.prototype.filterMovable = function filterMovable() {
     return this.entities.filter(function filter(e) {
       return e.velocity !== null;
     });
-  }
+  };
 
   GameEntityStore.prototype.getCollidables = function () {
     return this.entities.filter(function collidableFilter(e) {
       return e.boundingBox !== null;
     })
-  }
+  };
+
+  GameEntityStore.prototype.filterInArea = function filterInArea(neX, neY, swX, swY) {
+    return this.entities.filter(function filter(e) {
+      return e.position.x >= neX
+          && e.position.x <= swX
+          && e.position.y >= neY
+          && e.position.y <= swY;
+    })
+  };
+
+  GameEntityStore.prototype.filterDieable = function filterDieable() {
+    return this.entities.filter(function filter(e) {
+      return e.health !== null;
+    })
+  };
+
+  GameEntityStore.prototype.cleanup = function cleanup() {
+    this.entities = this.entities.filter(function filter(e) {
+      return e.health === null || e.health.hp > 0;
+    })
+  };
 
   GameEntityStore.prototype.createHuman = function () {
     const human = new GameEntity({
@@ -36,7 +58,8 @@ define([
     human.setPosition(new Position(0, 0))
       .setVelocity(new Velocity(0, 0))
       .setBoundingBox(new BoundingBox(15, 15))
-      .setHealth(new Health(100));
+      .setHealth(new Health(100))
+      .setWeapon(new Weapon('hand', 1, 2));
     this.entities.push(human);
     return human;
   }
