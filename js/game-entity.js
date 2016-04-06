@@ -1,15 +1,12 @@
 define([
+  'entity-component/position',
   'entity-component/bounding-box'
-], function(BoundingBox) {
+], function(Position, BoundingBox) {
   'use strict';
 
   var GameEntity = function(options) {
-    options.position = options.position || {};
     options.velocity = options.velocity || {};
-    this.position = {
-      x: options.position.x || 0,
-      y: options.position.y || 0
-    };
+    this.position = null;
     this.velocity = {
       x: options.velocity.x || 0,
       y: options.velocity.y || 0
@@ -21,18 +18,21 @@ define([
     Object.seal(this);
   };
 
+  GameEntity.prototype.setPosition = function setPosition(component) {
+    if (!(component instanceof Position)) {
+      throw new TypeError('not a Position component')
+    }
+    this.position = component;
+    return this;
+  }
+
   GameEntity.prototype.setBoundingBox = function setBoundingBox(component) {
     if (!(component instanceof BoundingBox)) {
-      throw new Error();
       throw new TypeError('not a BoundingBox component');
     }
     this.componentBoundingBox = component;
     return this;
   }
-
-  GameEntity.prototype.update = function () {
-
-  };
 
   return GameEntity;
 });

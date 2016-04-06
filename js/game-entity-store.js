@@ -1,8 +1,9 @@
 define([
   'game-entity',
+  'entity-component/position',
   'component-graphic',
   'component-physic'
-], function(GameEntity, ComponentGraphic, ComponentPhysic) {
+], function(GameEntity, Position, ComponentGraphic, ComponentPhysic) {
   'use strict';
 
   function GameEntityStore() {
@@ -24,13 +25,13 @@ define([
         isSolid: true
       })
     });
+    human.setPosition(new Position(0, 0));
     this.entities.push(human);
     return human;
   }
 
   GameEntityStore.prototype.createWall = function () {
     const wall = new GameEntity({
-      position: { x: 100, y: 100 },
       componentGraphic: new ComponentGraphic(),
       componentPhysic: new ComponentPhysic({
         boundingBox: {
@@ -40,6 +41,7 @@ define([
         isSolid: true
       })
     });
+    wall.setPosition(new Position(100, 100));
     this.entities.push(wall);
     return wall;
   }

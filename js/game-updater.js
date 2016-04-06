@@ -1,6 +1,7 @@
 define([
-  'game-input-handler'
-], function (GameInputHandler) {
+  'game-input-handler',
+  'entity-component/position'
+], function (GameInputHandler, Position) {
   'use strict';
 
   var GameUpdater = function (inputHandler, entityStore, player) {
@@ -57,12 +58,12 @@ define([
     for (let i = 0; i < len; i++) {
       let entity = entities[i];
       let entityVelocity = entity.componentPhysic.velocity;
-      const nextPosition = {
-        x: entity.position.x + entityVelocity.x * elapsedTime / 1000,
-        y: entity.position.y + entityVelocity.y * elapsedTime / 1000
-      }
+      const nextPosition = new Position(
+        entity.position.x + entityVelocity.x * elapsedTime / 1000,
+        entity.position.y + entityVelocity.y * elapsedTime / 1000
+      );
       if (!willCollide(entity, nextPosition, entities)) {
-        entity.position = nextPosition;
+        entity.setPosition(nextPosition);
       }
       if (entity.position.x < 0) { entity.position.x = 0; }
       if (entity.position.x > 305) { entity.position.x = 305; }
