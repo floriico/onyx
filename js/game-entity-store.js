@@ -3,8 +3,10 @@ define([
   'entity-component/position',
   'entity-component/velocity',
   'entity-component/bounding-box',
+  'entity-component/health',
   'component-graphic'
-], function(GameEntity, Position, Velocity, BoundingBox, ComponentGraphic) {
+], function(GameEntity, Position, Velocity, BoundingBox, Health,
+    ComponentGraphic) {
   'use strict';
 
   function GameEntityStore() {
@@ -33,7 +35,8 @@ define([
     });
     human.setPosition(new Position(0, 0))
       .setVelocity(new Velocity(0, 0))
-      .setBoundingBox(new BoundingBox(15, 15));
+      .setBoundingBox(new BoundingBox(15, 15))
+      .setHealth(new Health(100));
     this.entities.push(human);
     return human;
   }
