@@ -1,11 +1,10 @@
 define([
   'game-entity',
   'entity-component/position',
+  'entity-component/velocity',
   'entity-component/bounding-box',
-  'component-graphic',
-  'component-physic'
-], function(GameEntity, Position, BoundingBox, ComponentGraphic,
-    ComponentPhysic) {
+  'component-graphic'
+], function(GameEntity, Position, Velocity, BoundingBox, ComponentGraphic) {
   'use strict';
 
   function GameEntityStore() {
@@ -16,6 +15,12 @@ define([
     return this.entities;
   }
 
+  GameEntityStore.prototype.filterMovable = function filterMovable() {
+    return this.entities.filter(function filter(e) {
+      return e.velocity !== null;
+    });
+  }
+
   GameEntityStore.prototype.getCollidables = function () {
     return this.entities.filter(function collidableFilter(e) {
       return e.boundingBox !== null;
@@ -24,16 +29,10 @@ define([
 
   GameEntityStore.prototype.createHuman = function () {
     const human = new GameEntity({
-      componentGraphic: new ComponentGraphic({ color: '#2aa198'}),
-      componentPhysic: new ComponentPhysic({
-        boundingBox: {
-          height: 15,
-          width: 15
-        },
-        isSolid: true
-      })
+      componentGraphic: new ComponentGraphic({ color: '#2aa198'})
     });
     human.setPosition(new Position(0, 0))
+      .setVelocity(new Velocity(0, 0))
       .setBoundingBox(new BoundingBox(15, 15));
     this.entities.push(human);
     return human;
@@ -41,14 +40,7 @@ define([
 
   GameEntityStore.prototype.createWall = function () {
     const wall = new GameEntity({
-      componentGraphic: new ComponentGraphic(),
-      componentPhysic: new ComponentPhysic({
-        boundingBox: {
-          height: 15,
-          width: 15
-        },
-        isSolid: true
-      })
+      componentGraphic: new ComponentGraphic()
     });
     wall.setPosition(new Position(100, 100))
       .setBoundingBox(new BoundingBox(15, 15));

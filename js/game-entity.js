@@ -1,18 +1,14 @@
 define([
   'entity-component/position',
+  'entity-component/velocity',
   'entity-component/bounding-box'
-], function(Position, BoundingBox) {
+], function(Position, Velocity, BoundingBox) {
   'use strict';
 
   var GameEntity = function(options) {
-    options.velocity = options.velocity || {};
     this.position = null;
-    this.velocity = {
-      x: options.velocity.x || 0,
-      y: options.velocity.y || 0
-    };
+    this.velocity = null;
     this.componentGraphic = options.componentGraphic || null;
-    this.componentPhysic = options.componentPhysic || null;
     this.componentLife = options.componentLife || null;
     this.boundingBox = null;
     Object.seal(this);
@@ -23,6 +19,14 @@ define([
       throw new TypeError('not a Position component')
     }
     this.position = component;
+    return this;
+  }
+
+  GameEntity.prototype.setVelocity = function setVelocity(component) {
+    if (!(component instanceof Velocity)) {
+      throw new TypeError('not a Velocity component');
+    }
+    this.velocity = component;
     return this;
   }
 
