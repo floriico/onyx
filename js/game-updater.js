@@ -72,10 +72,15 @@ define([
     for (let i = 0; i < len; i++) {
       const collidable = collidables[i];
       if (entity !== collidable) {
-        if (nextPosition.x < collidable.position.x + collidable.boundingBox.width &&
-            nextPosition.x + entity.boundingBox.width > collidable.position.x &&
-            nextPosition.y < collidable.position.y + collidable.boundingBox.height &&
-            nextPosition.y + entity.boundingBox.height > collidable.position.y) {
+        const entityHalfWidth = entity.boundingBox.width / 2;
+        const entityHalfHeight = entity.boundingBox.height / 2;
+        const collidableHalfWidth = collidable.boundingBox.width / 2;
+        const collidableHalfHeight = collidable.boundingBox.height / 2;
+
+        if (nextPosition.x - entityHalfWidth < collidable.position.x + collidableHalfWidth &&
+            nextPosition.x + entityHalfWidth > collidable.position.x - collidableHalfWidth &&
+            nextPosition.y - entityHalfHeight < collidable.position.y + collidableHalfHeight &&
+            nextPosition.y + entityHalfHeight > collidable.position.y - collidableHalfHeight) {
           return true;
         }
       }
@@ -84,10 +89,10 @@ define([
   }
 
   function willBeOutsideBorders(nextPosition) {
-    return nextPosition.x < 0
-        || nextPosition.x  > 305
-        || nextPosition.y < 0
-        || nextPosition.y > 185;
+    return nextPosition.x < 5
+        || nextPosition.x  > 300
+        || nextPosition.y < 5
+        || nextPosition.y > 180;
   }
 
   return GameUpdater;

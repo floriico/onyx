@@ -8,6 +8,7 @@ define([], function () {
 
   ComponentGraphic.prototype.paint = function paint(gc) {
     gc.fillStyle = this.color;
+    gc.translate(-5, -5);
     gc.fillRect(0, 0, 10, 10);
   };
 

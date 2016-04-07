@@ -9,6 +9,7 @@ require([
 
   const entityStore = new GameEntityStore();
   const player = entityStore.createHuman();
+  player.position = { x: 10, y: 10 };
   entityStore.createWall().position = { x: 100, y: 100 };
   entityStore.createWall().position = { x: 50, y: 50 };
   entityStore.createHuman().position = { x: 100, y: 50 };
