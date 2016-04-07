@@ -42,6 +42,31 @@ define([
     }
   }
 
+  GameUpdater.prototype.update = function update(elapsedTime) {
+    updatePlayer(this.inputHandler, this.player, this.entityStore);
+    const entities = this.entityStore.filterMovable();
+    const len = entities.length;
+    for (let i = 0; i < len; i++) {
+      let entity = entities[i];
+      const nextPosition = new Position(
+        entity.position.x + entity.velocity.x * elapsedTime / 1000,
+        entity.position.y + entity.velocity.y * elapsedTime / 1000
+      );
+      if (!(willCollide(entity, nextPosition, this.entityStore.getCollidables()))
+          && !(willBeOutsideBorders(nextPosition))) {
+        entity.setPosition(nextPosition);
+      }
+    }
+    const dieable = this.entityStore.filterDieable();
+    const dieableLen = dieable.length;
+    for (let i = 0; i < dieableLen; i++) {
+      if (dieable[i].health.hp <= 0) {
+        this.entityStore.cleanup();
+        break;
+      }
+    }
+  };
+
   function willCollide(entity, nextPosition, collidables) {
     const len = collidables.length;
     for (let i = 0; i < len; i++) {
@@ -58,33 +83,12 @@ define([
     return false;
   }
 
-  GameUpdater.prototype.update = function update(elapsedTime) {
-    updatePlayer(this.inputHandler, this.player, this.entityStore);
-    const entities = this.entityStore.filterMovable();
-    const len = entities.length;
-    for (let i = 0; i < len; i++) {
-      let entity = entities[i];
-      const nextPosition = new Position(
-        entity.position.x + entity.velocity.x * elapsedTime / 1000,
-        entity.position.y + entity.velocity.y * elapsedTime / 1000
-      );
-      if (!willCollide(entity, nextPosition, this.entityStore.getCollidables())) {
-        entity.setPosition(nextPosition);
-      }
-      if (entity.position.x < 0) { entity.setPosition(new Position(0, entity.position.y)); }
-      if (entity.position.x > 305) { entity.setPosition(new Position(305, entity.position.y)) }
-      if (entity.position.y < 0) { entity.setPosition(new Position(entity.position.x, 0)) }
-      if (entity.position.y > 185) { entity.setPosition(new Position(entity.position.x, 185)) }
-    }
-    const dieable = this.entityStore.filterDieable();
-    const dieableLen = dieable.length;
-    for (let i = 0; i < dieableLen; i++) {
-      if (dieable[i].health.hp <= 0) {
-        this.entityStore.cleanup();
-        break;
-      }
-    }
-  };
+  function willBeOutsideBorders(nextPosition) {
+    return nextPosition.x < 0
+        || nextPosition.x  > 305
+        || nextPosition.y < 0
+        || nextPosition.y > 185;
+  }
 
   return GameUpdater;
 });
