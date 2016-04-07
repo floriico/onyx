@@ -28,11 +28,10 @@ define([
     if (inputHandler.isPressed(GameInputHandler.ACTION_A)) {
       player.componentGraphic.color = '#6c71c4';
       entityStore.getEntities().filter(function (e) {
-        return e !== player && e.position && e.health
-          && e.position.x > player.position.x - 10
-          && e.position.x < player.position.x + 25
-          && e.position.y > player.position.y - 10
-          && e.position.y < player.position.y + 25;
+        if (e === player || e.position === null || e.health === null) {
+          return false;
+        }
+        return player.position.isInRadius(e.position, 20);
       }).forEach(function (e) {
         e.health.hp -= player.weapon.minDamage + Math.floor(Math.random()
             * (player.weapon.maxDamage - player.weapon.minDamage));
@@ -94,6 +93,7 @@ define([
         || nextPosition.y < 5
         || nextPosition.y > 180;
   }
+
 
   return GameUpdater;
 });
