@@ -57,7 +57,7 @@ define([
     });
     human.setPosition(new Position(0, 0))
       .setVelocity(new Velocity(0, 0))
-      .setBoundingBox(new BoundingBox(15, 15))
+      .setBoundingBox(new BoundingBox(10, 10))
       .setHealth(new Health(100))
       .setWeapon(new Weapon('hand', 1, 2));
     this.entities.push(human);
@@ -69,7 +69,7 @@ define([
       componentGraphic: new ComponentGraphic()
     });
     wall.setPosition(new Position(100, 100))
-      .setBoundingBox(new BoundingBox(15, 15));
+      .setBoundingBox(new BoundingBox(10, 10));
     this.entities.push(wall);
     return wall;
   }
