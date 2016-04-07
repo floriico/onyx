@@ -12,16 +12,16 @@ define([
 
   function updatePlayer(inputHandler, player, entityStore) {
     if (inputHandler.isPressed(GameInputHandler.RIGHT)) {
-      player.velocity.x = 100;
+      player.velocity.x = 60;
     } else if (inputHandler.isPressed(GameInputHandler.LEFT)) {
-      player.velocity.x = -100;
+      player.velocity.x = -60;
     } else {
       player.velocity.x = 0;
     }
     if (inputHandler.isPressed(GameInputHandler.DOWN)) {
-      player.velocity.y = 100;
+      player.velocity.y = 60;
     } else if (inputHandler.isPressed(GameInputHandler.UP)) {
-      player.velocity.y = -100;
+      player.velocity.y = -60;
     } else {
       player.velocity.y = 0;
     }
