@@ -4,16 +4,17 @@ define([
   'entity-component/velocity',
   'entity-component/bounding-box',
   'entity-component/health',
-  'entity-component/weapon'
-], function(Position, Direction, Velocity, BoundingBox, Health, Weapon) {
+  'entity-component/weapon',
+  'entity-component/graphic'
+], function(Position, Direction, Velocity, BoundingBox, Health, Weapon,
+    Graphic) {
   'use strict';
 
-  var GameEntity = function(options) {
+  var GameEntity = function() {
     this.position = null;
     this.direction = null;
     this.velocity = null;
-    this.componentGraphic = options.componentGraphic || null;
-    this.componentLife = options.componentLife || null;
+    this.graphic = null;
     this.boundingBox = null;
     this.health = null;
     this.weapon = null;
@@ -67,6 +68,14 @@ define([
     this.weapon = component;
     return this;
   };
+
+  GameEntity.prototype.setGraphic = function setGraphic(component) {
+    if (!(component instanceof Graphic)) {
+      throw new TypeError('not a Graphic component');
+    }
+    this.graphic = component;
+    return this;
+  }
 
   return GameEntity;
 });

@@ -27,7 +27,7 @@ define([
       player.velocity.y = 0;
     }
     if (inputHandler.isPressed(GameInputHandler.ACTION_A)) {
-      player.componentGraphic.color = '#6c71c4';
+      player.graphic.color = '#6c71c4';
       entityStore.getEntities().filter(function (e) {
         if (e === player || e.position === null || e.health === null) {
           return false;
@@ -38,7 +38,7 @@ define([
             * (player.weapon.maxDamage - player.weapon.minDamage));
       });
     } else {
-      player.componentGraphic.color = '#2aa198';
+      player.graphic.color = '#2aa198';
     }
   }
 

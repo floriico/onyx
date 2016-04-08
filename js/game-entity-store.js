@@ -6,9 +6,9 @@ define([
   'entity-component/bounding-box',
   'entity-component/health',
   'entity-component/weapon',
-  'component-graphic'
+  'entity-component/graphic'
 ], function(GameEntity, Position, Direction, Velocity, BoundingBox, Health,
-    Weapon, ComponentGraphic) {
+    Weapon, Graphic) {
   'use strict';
 
   function GameEntityStore() {
@@ -53,13 +53,12 @@ define([
   };
 
   GameEntityStore.prototype.createHuman = function () {
-    const human = new GameEntity({
-      componentGraphic: new ComponentGraphic({ color: '#2aa198'})
-    });
+    const human = new GameEntity();
     human.setPosition(new Position(0, 0))
       .setDirection(Direction.EAST)
       .setVelocity(new Velocity(0, 0))
       .setBoundingBox(new BoundingBox(10, 10))
+      .setGraphic(new Graphic('#2aa198'))
       .setHealth(new Health(100))
       .setWeapon(new Weapon('hand', 1, 2));
     this.entities.push(human);
@@ -67,11 +66,10 @@ define([
   }
 
   GameEntityStore.prototype.createWall = function () {
-    const wall = new GameEntity({
-      componentGraphic: new ComponentGraphic()
-    });
+    const wall = new GameEntity();
     wall.setPosition(new Position(100, 100))
-      .setBoundingBox(new BoundingBox(10, 10));
+      .setBoundingBox(new BoundingBox(10, 10))
+      .setGraphic(new Graphic());
     this.entities.push(wall);
     return wall;
   }
