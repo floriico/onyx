@@ -18,7 +18,7 @@ define([], function () {
       let entity = entities[i];
       this.gc.save();
       this.gc.translate(Math.round(entity.position.x), Math.round(entity.position.y));
-      entity.graphic.paint(this.gc);
+      entity.graphic.paint(this.gc, entity.direction);
       if (entity.health) {
         displayHealthBar(this.gc, (entity.boundingBox && entity.boundingBox.width) || 10, entity.health);
       }
