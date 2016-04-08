@@ -2,8 +2,8 @@ define([], function() {
   'use strict';
 
   var GameLoop = function(updater, renderer, updateFrequency) {
-    this.updater = updater;
-    this.renderer = renderer;
+    this.update = updater.update.bind(updater);
+    this.render = renderer.paint.bind(renderer);
     this.updateFrequency = updateFrequency || 32;
     this.lastTick = null;
     this.deltaTime = 0;
@@ -18,9 +18,9 @@ define([], function() {
     this.deltaTime += elapsedTime;
     while (this.deltaTime > this.updateFrequency) {
       this.deltaTime -= this.updateFrequency;
-      this.updater.update.call(this.updater, this.updateFrequency);
+      this.update(this.updateFrequency);
     }
-    this.renderer.paint.call(this.renderer, elapsedTime);
+    this.render(elapsedTime);
     this.lastTick = now;
     if (this.run) {
       requestAnimationFrame(this.tick.bind(this));
