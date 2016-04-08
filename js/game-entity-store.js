@@ -1,13 +1,14 @@
 define([
   'game-entity',
   'entity-component/position',
+  'entity-component/direction',
   'entity-component/velocity',
   'entity-component/bounding-box',
   'entity-component/health',
   'entity-component/weapon',
   'component-graphic'
-], function(GameEntity, Position, Velocity, BoundingBox, Health, Weapon,
-    ComponentGraphic) {
+], function(GameEntity, Position, Direction, Velocity, BoundingBox, Health,
+    Weapon, ComponentGraphic) {
   'use strict';
 
   function GameEntityStore() {
@@ -56,6 +57,7 @@ define([
       componentGraphic: new ComponentGraphic({ color: '#2aa198'})
     });
     human.setPosition(new Position(0, 0))
+      .setDirection(Direction.EAST)
       .setVelocity(new Velocity(0, 0))
       .setBoundingBox(new BoundingBox(10, 10))
       .setHealth(new Health(100))

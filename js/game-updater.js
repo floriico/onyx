@@ -1,7 +1,8 @@
 define([
   'game-input-handler',
-  'entity-component/position'
-], function (GameInputHandler, Position) {
+  'entity-component/position',
+  'entity-component/Direction'
+], function (GameInputHandler, Position, Direction) {
   'use strict';
 
   var GameUpdater = function (inputHandler, entityStore, player) {
@@ -51,6 +52,7 @@ define([
         entity.position.x + entity.velocity.x * elapsedTime / 1000,
         entity.position.y + entity.velocity.y * elapsedTime / 1000
       );
+      updateDirection(entity);
       if (!(willCollide(entity, nextPosition, this.entityStore.getCollidables()))
           && !(willBeOutsideBorders(nextPosition))) {
         entity.setPosition(nextPosition);
@@ -92,6 +94,21 @@ define([
         || nextPosition.x  > 300
         || nextPosition.y < 5
         || nextPosition.y > 180;
+  }
+
+  function updateDirection(entity) {
+    if (entity.direction && entity.velocity) {
+      if (entity.velocity.y > 0) {
+        entity.direction = Direction.SOUTH;
+      } else if (entity.velocity.y < 0) {
+        entity.direction = Direction.NORTH;
+      }
+      if (entity.velocity.x > 0) {
+        entity.direction = Direction.EAST;
+      } else if (entity.velocity.x < 0) {
+        entity.direction = Direction.WEST;
+      }
+    }
   }
 
 

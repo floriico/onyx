@@ -1,14 +1,16 @@
 define([
   'entity-component/position',
+  'entity-component/direction',
   'entity-component/velocity',
   'entity-component/bounding-box',
   'entity-component/health',
   'entity-component/weapon'
-], function(Position, Velocity, BoundingBox, Health, Weapon) {
+], function(Position, Direction, Velocity, BoundingBox, Health, Weapon) {
   'use strict';
 
   var GameEntity = function(options) {
     this.position = null;
+    this.direction = null;
     this.velocity = null;
     this.componentGraphic = options.componentGraphic || null;
     this.componentLife = options.componentLife || null;
@@ -24,7 +26,15 @@ define([
     }
     this.position = component;
     return this;
-  }
+  };
+
+  GameEntity.prototype.setDirection = function setDirection(component) {
+    if (!(component instanceof Direction)) {
+      throw new TypeError('not a Direction component');
+    }
+    this.direction = component;
+    return this;
+  };
 
   GameEntity.prototype.setVelocity = function setVelocity(component) {
     if (!(component instanceof Velocity)) {
@@ -32,7 +42,7 @@ define([
     }
     this.velocity = component;
     return this;
-  }
+  };
 
   GameEntity.prototype.setBoundingBox = function setBoundingBox(component) {
     if (!(component instanceof BoundingBox)) {
@@ -40,7 +50,7 @@ define([
     }
     this.boundingBox = component;
     return this;
-  }
+  };
 
   GameEntity.prototype.setHealth = function setHealth(component) {
     if (!(component instanceof Health)) {
@@ -48,7 +58,7 @@ define([
     }
     this.health = component;
     return this;
-  }
+  };
 
   GameEntity.prototype.setWeapon = function setWeapon(component) {
     if (!(component instanceof Weapon)) {
@@ -56,7 +66,7 @@ define([
     }
     this.weapon = component;
     return this;
-  }
+  };
 
   return GameEntity;
 });
