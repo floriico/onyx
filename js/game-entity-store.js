@@ -13,6 +13,7 @@ define([
 
   function GameEntityStore() {
     this.entities = [];
+    this.spwaners = [];
   }
 
   GameEntityStore.prototype.getEntities = function () {
@@ -50,14 +51,24 @@ define([
     this.entities = this.entities.filter(function filter(e) {
       return e.health === null || e.health.hp > 0;
     })
+    const len = this.spwaners.length;
+    for (let i = 0; i < len; i++) {
+      this.spwaners[i].cleanup();
+    }
   };
 
   GameEntityStore.prototype.addEntity = function addEntity(entity) {
     this.entities.push(entity);
+    return this;
   };
 
   GameEntityStore.prototype.createFactory = function createFactory(Factory) {
     return new Factory(this);
+  }
+
+  GameEntityStore.prototype.registerSpwaner = function registerSpwaner(spwaner) {
+    this.spwaners.push(spwaner);
+    return spwaner;
   }
 
   GameEntityStore.prototype.createWall = function () {

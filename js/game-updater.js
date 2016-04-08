@@ -66,6 +66,7 @@ define([
         break;
       }
     }
+    updateSpwaners(this.entityStore.spwaners, elapsedTime);
   };
 
   function willCollide(entity, nextPosition, collidables) {
@@ -111,6 +112,12 @@ define([
     }
   }
 
+  function updateSpwaners(spwaners, elapsedTime) {
+    const len = spwaners.length;
+    for (let i = 0; i < len; i++) {
+      spwaners[i].update(elapsedTime);
+    }
+  }
 
   return GameUpdater;
 });
