@@ -52,17 +52,12 @@ define([
     })
   };
 
-  GameEntityStore.prototype.createHuman = function () {
-    const human = new GameEntity();
-    human.setPosition(new Position(0, 0))
-      .setDirection(Direction.EAST)
-      .setVelocity(new Velocity(0, 0))
-      .setBoundingBox(new BoundingBox(10, 10))
-      .setGraphic(new Graphic('#2aa198'))
-      .setHealth(new Health(100))
-      .setWeapon(new Weapon('hand', 1, 2));
-    this.entities.push(human);
-    return human;
+  GameEntityStore.prototype.addEntity = function addEntity(entity) {
+    this.entities.push(entity);
+  };
+
+  GameEntityStore.prototype.createFactory = function createFactory(Factory) {
+    return new Factory(this);
   }
 
   GameEntityStore.prototype.createWall = function () {
