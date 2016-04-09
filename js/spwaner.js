@@ -32,7 +32,7 @@ define([
 
   Spwaner.prototype.cleanup = function cleanup() {
     this.entities = this.entities.filter(function filter(e) {
-      return (e.health && (e.health.hp <= 0)) || !(e.health);
+      return (e.health && (e.health.hp > 0)) || !(e.health);
     });
   }
 
