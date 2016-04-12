@@ -12,7 +12,7 @@ define([
     gc.fillStyle = this.color;
     gc.translate(-5, -5);
     gc.fillRect(0, 0, 10, 10);
-    gc.fillStyle = "#839496";
+    gc.fillStyle = "#073642";
     if (direction) {
       if (direction.direction === Direction.NORTH.direction) {
         gc.fillRect(5, 0, 1, 5);
