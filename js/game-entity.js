@@ -5,9 +5,10 @@ define([
   'entity-component/bounding-box',
   'entity-component/health',
   'entity-component/weapon',
-  'entity-component/graphic'
+  'entity-component/graphic',
+  'entity-component/experience'
 ], function(Position, Direction, Velocity, BoundingBox, Health, Weapon,
-    Graphic) {
+    Graphic, Experience) {
   'use strict';
 
   var GameEntity = function() {
@@ -18,6 +19,7 @@ define([
     this.boundingBox = null;
     this.health = null;
     this.weapon = null;
+    this.experience = null;
     Object.seal(this);
   };
 
@@ -74,6 +76,14 @@ define([
       throw new TypeError('not a Graphic component');
     }
     this.graphic = component;
+    return this;
+  }
+
+  GameEntity.prototype.setExperience = function setExperience(component) {
+    if (!(component instanceof Experience)) {
+      throw new TypeError('not a Experience component');
+    }
+    this.experience = component
     return this;
   }
 
