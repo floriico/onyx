@@ -3,7 +3,7 @@ define([
 ], function (Experience) {
   'use strict';
 
-  function Leveling() {
+  function LevelSystem() {
     this.levelExperienceTable = {
       1: 0,
       2: 100,
@@ -15,7 +15,7 @@ define([
     Object.freeze(this);
   }
 
-  Leveling.prototype.getLevel = function getLevel(experience) {
+  LevelSystem.prototype.getLevel = function getLevel(experience) {
     if (!(experience instanceof Experience)) {
       throw new TypeError('Not an Experience component');
     }
@@ -33,7 +33,7 @@ define([
     return lvl;
   }
 
-  Leveling.prototype.update = function update(experience) {
+  LevelSystem.prototype.update = function update(experience) {
     if (experience instanceof Experience) {
       const level = this.getLevel(experience);
       while (level > experience.level) {
@@ -41,4 +41,6 @@ define([
       }
     }
   }
+
+  return LevelSystem;
 })
