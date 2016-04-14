@@ -6,6 +6,7 @@ define([
 
   function MoveSystem(entityStore) {
     this.entityStore = entityStore;
+    Object.freeze(this);
   }
 
   MoveSystem.prototype.update = function update(entity, elapsedTime) {
